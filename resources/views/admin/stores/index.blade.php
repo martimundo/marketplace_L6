@@ -4,7 +4,7 @@
         <a href="{{ route('admin.stores.create') }}" class="btn btn-secondary mt-2"><i class="fa-solid fa-plus"></i> Cadastrar
             nova
             Loja</a>
-    @endif
+    @else
     <div class="container">
         
         <div class="card border-primary mb-3" style="max-width: 18rem;">
@@ -30,4 +30,5 @@
             </form>
         </div>
     </div>
+    @endif
 @endsection

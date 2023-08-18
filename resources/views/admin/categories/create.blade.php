@@ -21,13 +21,8 @@
 				<div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-        </div>       
-        <div class="row">
-            <div class="col-4 form-group mb-2">
-                <label class="form-label">Slug</label>
-                <input type="text" name="slug" class="form-control form-control-sm"></input>
-            </div>
-        </div>
+        </div>    
+        
         <div>
             <button type="submit" class="btn btn-primary">Salvar</button>
             <a href="{{route('admin.categories.index')}}" class="btn btn-info">Lista de categorias</a>

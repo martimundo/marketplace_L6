@@ -14,7 +14,7 @@ use App\Traits\UploadTrait;
 class ProductController extends Controller
 {
     use UploadTrait;
-    
+
     private $product;
 
     public function __construct(Product $product)
@@ -61,15 +61,17 @@ class ProductController extends Controller
 
         $data = $request->all(); //faz a req. de todos os dados 
 
+        $categories = $request->get('categorires', null);
+
         $store = auth()->user()->store; //pega a loja do usuário da logado
 
         $product = $store->products()->create($data); //cria um novo produto na loja do usuário
 
-        $product->categories()->sync($data['categories']); //faz o insert da categoria no produto
+        $product->categories()->sync($categories); //faz o insert da categoria no produto
 
-        if($request->hasFile('photos')){
+        if ($request->hasFile('photos')) {
 
-            $images = $this->imageUpload($request->file('photos'),'image');
+            $images = $this->imageUpload($request->file('photos'), 'image');
 
             //inserção das fotos na table
             $product->photos()->createMany($images);
@@ -118,15 +120,20 @@ class ProductController extends Controller
     {
         $data = $request->all();
 
+        $categories = $request->get('ctegories', null);
+
         $product = $this->product->find($id);
 
         $product->update($data);
 
-        $product->categories()->sync($data['categories']); //faz o insert da categoria no produto
+        if (!is_null($categories)) {
 
-        if($request->hasFile('photos')){
+            $product->categories()->sync($categories); //faz o insert da categoria no produto
+        }
 
-            $images = $this->imageUpload($request->file('photos'),'image');
+        if ($request->hasFile('photos')) {
+
+            $images = $this->imageUpload($request->file('photos'), 'image');
 
             //inserção das fotos na table
             $product->photos()->createMany($images);
@@ -154,5 +161,4 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index');
     }
-   
 }

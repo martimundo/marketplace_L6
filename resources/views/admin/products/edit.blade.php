@@ -49,7 +49,7 @@
             <div class="col-6">
                 <div class="form-group">
                     <label for=""><i class="fa-solid fa-camera-retro"></i> Foto do Produto</label>
-                    <input type="file" name="photos[]" class="form-control @error('photos')is-invalid @enderror" 
+                    <input type="file" name="photos[]" class="form-control @error('photos.*')is-invalid @enderror" 
                         multiple>
                     @error('photos')
                         <div class="invalid-feedback">>{{ $message }}</div>
