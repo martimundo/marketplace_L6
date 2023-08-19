@@ -12,12 +12,16 @@
 */
 //use Illuminate\Routing\Route;
 
-Route::get('/', function () {
 
-    $text = "Marketplace 2023";
-    return view('welcome', ['text'=>$text]);
-})->name('home');
+//######## FRONT END
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/product/{slug}', 'HomeController@single')->name('product.single');
 
+
+
+
+
+//########ROTAS ADMINISTRATIVA
 Route::group(['middleware'=>'auth'], function(){
 
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){

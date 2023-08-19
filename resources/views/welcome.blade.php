@@ -1,95 +1,23 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.front')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ route('home') }}">Home</a>
+@section('content')
+    <div class="row">
+        @foreach ($products as $product)
+            <div class="col-3 m-1 ">
+                <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
+                    @if ($product->photos->count())
+                        <img src="{{ asset('storage/' . $product->photos->first()->image) }}" class="card-img-top" alt="{{$product->name}}">
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Cadastrar</a>
-                        @endif
-                    @endauth
-                    
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                  {{$text}}
-                </div>
-
-                <div class="links">
-                    <a href="{{route('admin.stores.index')}}">Acessar o Marketplace</a>
-                    
+                        <img src="{{ asset('assets/img/produtoSemFoto.jpg') }}" class="card-img-top" alt="...">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $product->name }}</h5>
+                        <p class="card-text">{{ $product->description }}.</p>
+                        <p class="card-text">R$ {{ number_format($product->price, 2, ',', '.') }}.</p>
+                        <a href="{{route('product.single', ['slug'=>$product->slug])}}" class="btn btn-primary">Detalhes</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </body>
-</html>
+        @endforeach
+    </div>
+@endsection
