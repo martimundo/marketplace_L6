@@ -19,8 +19,11 @@ Route::get('/product/{slug}', 'HomeController@single')->name('product.single');
 
 Route::prefix('cart')->name('cart.')->group(function(){
 
+    Route::get('/', 'CartController@index')->name('index');
+    Route::get('remove/{slug}', 'CartController@remove')->name('remove');
+    Route::get('cancel', 'CartController@cancel')->name('cancel');    
     Route::post('add', 'CartController@add')->name('add');
-    
+
 });
 
 

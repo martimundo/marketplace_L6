@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 40px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning text-white" style="margin-bottom: 40px;">
 
         <a class="navbar-brand" href="{{ route('home') }}">Marketplace L6</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -22,13 +22,19 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
 
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto  ">
                 <li class="nav-item @if (request()->is('/')) active @endif">
                     <a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
-            </ul>
+                <li class="nav-item @if (request()->is('/')) active @endif">
+                    <a class="nav-link" href="{{ route('cart.index') }}">Carrinho <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>       
+
+
+
 
             @auth
                 <ul class="navbar-nav mr-auto">
