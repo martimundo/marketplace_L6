@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -9,7 +10,8 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->has('cart') ? session()->get('cart') : [];
-        return view('cart', compact('cart'));
+        $categories = Category::all('slug', 'name');
+        return view('cart', compact('cart', 'categories'));
     }
 
     public function add(Request $request)
@@ -50,12 +52,26 @@ class CartController extends Controller
         return redirect()->route('cart.index');
     }
 
-    public function cancel(){
+    public function cancel()
+    {
 
         session()->forget('cart');
 
         flash('Compra Cancelada')->success();
-        
+
         return redirect()->route('home');
+    }
+
+    private function productIncrement($slug, $amount, $products)
+    {
+
+        $products = array_map(function ($line) use ($slug, $amount) {
+            if ($slug == $line['slug']) {
+                $line['amount'] += $amount;
+            }
+            return $line;
+        }, $products);
+
+        return $products;
     }
 }

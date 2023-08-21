@@ -29,8 +29,13 @@
                             <div class="product p-4">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span
-                                            class="ml-1"><a href="{{ route('home') }}">Voltar</a></span> </div> <i
-                                        class="fa fa-shopping-cart text-muted"></i>
+                                            class="ml-1"><a href="{{ route('home') }}">Voltar</a></span> </div>
+                                            
+                                            @if(session()->has('cart'))
+                                            <i class="fa fa-shopping-cart text-muted"><span class="badge badge-danger ml-1">{{count(session()->get('cart'))}}</span></i>
+                                            @else 
+                                            <i class="fa fa-shopping-cart text-muted"><span class="badge badge-danger"></span></i>                                          
+                                             @endif
                                 </div>
                                 <div class="mt-4 mb-3"> <span
                                         class="text-uppercase text-muted brand">{{ $product->name }}</span>
