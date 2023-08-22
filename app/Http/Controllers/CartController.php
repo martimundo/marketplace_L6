@@ -21,8 +21,20 @@ class CartController extends Controller
         //verifica se existe carrinho na sessão
         if (session()->has('cart')) {
 
-            //add produtos no carrinho existindo sessão valida
-            session()->push('cart', $product);
+            $products= session()->get('cart');
+            $productsSlugs = array_column($products, 'slug');
+
+            if(in_array($product['slug'], $productsSlugs)){
+
+                $products = $this->productIncrement($product['slug'], $product['amount'], $products);
+
+                session()->put('cart',$products);
+                
+            }else{
+
+                session()->push('cart', $product);
+
+            }
         } else {
             //não existe carrinho na sessão valida
             $products[] = $product;

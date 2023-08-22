@@ -22,7 +22,7 @@ class HomeController extends Controller
     public function index()
     {
         $products = $this->product
-            ->limit(10)
+            ->limit(9)
             ->orderBy('id', 'DESC')
             ->get();
 

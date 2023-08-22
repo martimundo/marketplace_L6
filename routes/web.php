@@ -14,6 +14,9 @@
 
 
 //######## FRONT END
+
+
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/product/{slug}', 'HomeController@single')->name('product.single');
 
@@ -26,7 +29,13 @@ Route::prefix('cart')->name('cart.')->group(function(){
 
 });
 
+//Rotas para o CHECKOUT
+Route::prefix('checkout')->name('checkout.')->group(function(){
 
+    Route::get('/','CheckoutController@index')->name('index');
+
+
+});
 
 
 
