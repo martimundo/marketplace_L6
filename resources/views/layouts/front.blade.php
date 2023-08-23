@@ -253,7 +253,7 @@
     </footer>
     <!-- Footer -->
 
-
+@yield('scripts')
 </body>
 
 </html>
