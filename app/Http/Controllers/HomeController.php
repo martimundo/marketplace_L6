@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    private $product;
+    // private $product;
 
-    public function __construct(Product $product)
-    {
-        $this->product = $product;
-    }
+    // public function __construct(Product $product)
+    // {
+    //     $this->product = $product;
+    // }
 
     /**
      * Show the application dashboard.
@@ -21,10 +21,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = $this->product
-            ->limit(9)
-            ->orderBy('id', 'DESC')
-            ->get();
+        $products = Product::orderBy('id','desc')->paginate(9);
+            
 
         return view('welcome', compact('products'));
     }
@@ -32,7 +30,7 @@ class HomeController extends Controller
     public function single($slug)
     {
 
-        $product = $this->product->whereSlug($slug)->first();
+        $product = Product::whereSlug($slug)->first();
 
         return view ('single', compact('product'));
     }

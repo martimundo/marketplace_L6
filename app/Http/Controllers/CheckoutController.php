@@ -8,6 +8,8 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        //session()->forget('pagseguro_session_code');
+
         if (!auth()->check()) {
             return redirect()->route('login');
         }
@@ -19,15 +21,21 @@ class CheckoutController extends Controller
         return view('checkout');
     }
 
+    public function process(Request $request)
+    {
+
+        dd($request->all);
+    }
+
     private function makePagSeguroSession()
     {
 
         if (!session()->has('pagseguro_session_code')) {
-            
+
             $sessionCode = \PagSeguro\Services\Session::create(
                 \PagSeguro\Configuration\Configure::getAccountCredentials()
             );
-        }else{
+        } else {
             return null;
         }
         return session()->put('pagseguro_session_code', $sessionCode->getResult());

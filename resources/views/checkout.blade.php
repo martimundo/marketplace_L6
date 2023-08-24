@@ -59,8 +59,8 @@
             </div>
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Endereço de Cobrança</h4>
-                <form class="needs-validation" novalidate method="POST">
-                    @csrf
+                <form class="needs-validation" novalidate>
+                   
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">Nome</label>
@@ -183,7 +183,8 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="cc-name">Nome no Cartão</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                            <input type="text" class="form-control" id="cc-name" placeholder="Nome no Cartão"
+                                required>
                             <small class="text-muted">Nome como esta escrito no cartão</small>
                             <div class="invalid-feedback">
                                 Name on card is required
@@ -191,6 +192,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="cc-number">Nº do Cartão</label> <span class="brand"></span>
+                            <input type="hidden" name="card_brand">
 
                             <input type="text" class="form-control" id="cc-number" placeholder="Nº Cartão" required
                                 name="card_number">
@@ -201,9 +203,17 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">Validade</label>
+                            <label for="cc-expiration">Mês de Validade</label>
                             <input type="text" class="form-control" id="cc-expiration" placeholder="Dt. Validade"
-                                required name="card_validate">
+                                required name="card_month">
+                            <div class="invalid-feedback">
+                                Expiration date required
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="cc-expiration">Ano de Validade</label>
+                            <input type="text" class="form-control" id="cc-expiration" placeholder="Dt. Validade"
+                                required name="card_year">
                             <div class="invalid-feedback">
                                 Expiration date required
                             </div>
@@ -217,8 +227,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6 installments form-group"></div>
+                    </div>
                     <hr class="mb-4 bg-primary">
-                    <button class="btn btn-success btn-lg btn-block" type="submit">Efetuar Pagamento</button>
+                    <button class="btn btn-success btn-lg btn-block processCheckout" type="submit">Efetuar
+                        Pagamento</button>
                 </form>
             </div>
         </div>
@@ -227,6 +241,7 @@
 
 @section('scripts')
     <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+    <script src="{{ asset('assets/js/jquery.ajax.js') }}"></script>
     <script>
         const sessionId = '{{ session()->get('pagseguro_session_code') }}';
         PagSeguroDirectPayment.setSessionId(sessionId);
@@ -243,8 +258,12 @@
                 PagSeguroDirectPayment.getBrand({
                     cardBin: cardNumber.value.substr(0, 6),
                     success: function(res) {
-                        let imgFlag =  `<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${res.brand.name}.png">`
+                        let imgFlag =
+                            `<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${res.brand.name}.png">`
                         spanBrand.innerHTML = imgFlag;
+                        document.querySelector('input[name=card_brand]').value = res.brand.name;
+
+                        getInstallments(1500, res.brand.name);
                     },
                     error: function(err) {
                         console.log(err);
@@ -256,5 +275,75 @@
             }
 
         });
+
+        let submitButton = document.querySelector('button.processCheckout');
+
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefautl();
+            PagSeguroDirectPayment.createCardToken({
+                cardNumber: document.querySelector('input[name=card_number]').value,
+                brand: document.querySelector('input[name=card_brand]').value,
+                cvv: document.querySelector('input[name=card_cvv]').value,
+                expirationMonth: document.querySelector('input[name=card_month]').value,
+                expirationYear: document.querySelector('input[name=card_year]').value,
+                success: function(res) {
+                    console.log(res)
+                    processPayment(res.card.token);
+                },
+            });
+        });
+
+
+        function processPayment(token) {
+            let data = {
+                card_token: token,
+                hash: PagSeguroDirectPayment.getSenderHash(),
+                installment: document.querySelector('select.select_installments').value,
+                card_name: document.querySelector('input[name=card_name]').value,
+                _token: csrf
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '{{route("checkout.process")}}',
+                data: data,
+                dataType: 'json',
+                success: function(res) {
+                    console.log(res);
+                }
+            });
+        }
+
+        function getInstallments(amount, brand) {
+            PagSeguroDirectPayment.getInstallments({
+                amount: amount,
+                brand: brand,
+                maxInstallmentNoInterest: 9,
+                success: function(res) {
+                    let selectinstallments = drawSelectInstallments(res.installments[brand]);
+                    document.querySelector('div.installments').innerHTML = selectinstallments;
+                },
+                error: function(err) {
+                    console.log(err)
+                },
+                complete: function(res) {
+
+                }
+            })
+        }
+
+        function drawSelectInstallments(installments) {
+            let select = '<label>Opções de Parcelamento:</label>';
+
+            select += '<select class="form-control select_installments">';
+
+            for (let l of installments) {
+                select +=
+                    `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
+            }
+            select += '</select>';
+
+            return select;
+        }
     </script>
 @endsection
