@@ -15,7 +15,7 @@
 
 //######## FRONT END
 
-
+use Illuminate\Http\Request;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/product/{slug}', 'HomeController@single')->name('product.single');
@@ -33,9 +33,7 @@ Route::prefix('cart')->name('cart.')->group(function(){
 Route::prefix('checkout')->name('checkout.')->group(function(){
 
     Route::get('/','CheckoutController@index')->name('index');
-    Route::post('/process','CheckoutController@process' )->name('process');
-
-
+    Route::post('/proccess','CheckoutController@proccess' )->name('proccess');
 });
 
 

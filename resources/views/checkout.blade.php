@@ -8,6 +8,7 @@
         </div>
 
         <div class="row">
+            <!--
             <div class="col-md-4 order-md-2 mb-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Carrinho</span>
@@ -56,11 +57,12 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div>-->
             <div class="col-md-8 order-md-1">
-                <h4 class="mb-3">Endereço de Cobrança</h4>
-                <form class="needs-validation" novalidate>
+                <!--<h4 class="mb-3">Endereço de Cobrança</h4>-->
+                <form class="needs-validation" novalidate method="post">
                    
+                   <!--
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">Nome</label>
@@ -79,7 +81,8 @@
                             </div>
                         </div>
                     </div>
-
+                    -->
+                    <!--
                     <div class="mb-3">
                         <label for="username">Usuário</label>
                         <div class="input-group">
@@ -112,8 +115,8 @@
                     <div class="mb-3">
                         <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
                         <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-                    </div>
-
+                    </div>-->
+                    <!--
                     <div class="row">
                         <div class="col-md-5 mb-3">
                             <label for="country">Country</label>
@@ -142,9 +145,9 @@
                                 Zip code required.
                             </div>
                         </div>
-                    </div>
-                    <hr class="mb-4 bg-primary">
-                    <div class="custom-control custom-checkbox">
+                        </div>
+                        <hr class="mb-4 bg-primary">
+                        <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="same-address">
                         <label class="custom-control-label" for="same-address">O endereço de entrega é o mesmo do meu
                             endereço de cobrança</label>
@@ -153,11 +156,11 @@
                         <input type="checkbox" class="custom-control-input" id="save-info">
                         <label class="custom-control-label" for="save-info">Salve esta informação para a próxima
                             vez</label>
-                    </div>
+                    </div>-->
                     <hr class="mb-4 bg-primary">
 
                     <h4 class="mb-3">Forma de Pagamento</h4>
-
+                    <!--
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
                             <input id="credit" name="paymentMethod" type="radio" class="custom-control-input"
@@ -179,12 +182,12 @@
                                 required>
                             <label class="custom-control-label" for="paypal">Pix</label>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="cc-name">Nome no Cartão</label>
                             <input type="text" class="form-control" id="cc-name" placeholder="Nome no Cartão"
-                                required>
+                                required name="card_name">
                             <small class="text-muted">Nome como esta escrito no cartão</small>
                             <div class="invalid-feedback">
                                 Name on card is required
@@ -231,7 +234,7 @@
                         <div class="col-md-6 installments form-group"></div>
                     </div>
                     <hr class="mb-4 bg-primary">
-                    <button class="btn btn-success btn-lg btn-block processCheckout" type="submit">Efetuar
+                    <button class="btn btn-success btn-lg btn-block proccessCheckout mb-5" type="submit">Efetuar
                         Pagamento</button>
                 </form>
             </div>
@@ -248,6 +251,7 @@
     </script>
 
     <script>
+        let amountTransaction = '{{$cartItens}}'
         let cardNumber = document.querySelector('input[name=card_number]');
         let spanBrand = document.querySelector('span.brand');
 
@@ -262,8 +266,7 @@
                             `<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${res.brand.name}.png">`
                         spanBrand.innerHTML = imgFlag;
                         document.querySelector('input[name=card_brand]').value = res.brand.name;
-
-                        getInstallments(1500, res.brand.name);
+                        getInstallments(amountTransaction, res.brand.name);
                     },
                     error: function(err) {
                         console.log(err);
@@ -276,7 +279,7 @@
 
         });
 
-        let submitButton = document.querySelector('button.processCheckout');
+        let submitButton = document.querySelector('button.proccessCheckout');
 
         submitButton.addEventListener('click', function(event) {
             event.preventDefautl();
@@ -288,24 +291,24 @@
                 expirationYear: document.querySelector('input[name=card_year]').value,
                 success: function(res) {
                     console.log(res)
-                    processPayment(res.card.token);
+                    proccessPayment(res.card.token);
                 },
             });
         });
 
 
-        function processPayment(token) {
+        function proccessPayment(token) {
             let data = {
                 card_token: token,
                 hash: PagSeguroDirectPayment.getSenderHash(),
                 installment: document.querySelector('select.select_installments').value,
                 card_name: document.querySelector('input[name=card_name]').value,
-                _token: csrf
+                _token: "{{csrf_token()}}"
             };
 
             $.ajax({
-                type: 'POST',
-                url: '{{route("checkout.process")}}',
+                type:'POST',
+                url: '{{route("checkout.proccess")}}',
                 data: data,
                 dataType: 'json',
                 success: function(res) {
