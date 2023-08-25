@@ -11,12 +11,12 @@ class Store extends Model
 {
     use HasSlug;
 
-    protected $fillable = ['name','description','fone','mobile_fone','slug','logo' ];
+    protected $fillable = ['name', 'description', 'fone', 'mobile_fone', 'slug', 'logo'];
 
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -24,14 +24,21 @@ class Store extends Model
     }
 
     //muitos usuários
-    public function user(){
+    public function user()
+    {
 
         return $this->belongsTo(User::class);
     }
 
     //muitos produtos
-    public function products(){
+    public function products()
+    {
 
         return $this->hasMany(product::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(UserOrder::class);
     }
 }

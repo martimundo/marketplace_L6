@@ -70,7 +70,7 @@ class ProductController extends Controller
         $product->categories()->sync($categories); //faz o insert da categoria no produto
 
         if ($request->hasFile('photos')) {
-
+            
             $images = $this->imageUpload($request->file('photos'), 'image');
 
             //inserção das fotos na table
