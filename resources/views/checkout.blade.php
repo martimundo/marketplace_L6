@@ -60,8 +60,8 @@
             </div>-->
             <div class="col-md-8 order-md-1">
                 <!--<h4 class="mb-3">Endereço de Cobrança</h4>-->
-                <form class="needs-validation" novalidate method="post">
-                   
+                <form class="needs-validation" method="post">
+                                   
                    <!--
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -307,12 +307,14 @@
             };
 
             $.ajax({
-                type:'POST',
+                type:"POST",
                 url: '{{route("checkout.proccess")}}',
                 data: data,
                 dataType: 'json',
                 success: function(res) {
-                    console.log(res);
+                    alert(res.data.message);
+                    
+                    //console.log(res);
                 }
             });
         }

@@ -18,6 +18,7 @@ class CreateUserOrderTable extends Migration
 
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('store_id');
+            
             $table->string('reference');
             $table->string('pagseguro_code');
             $table->integer('pagseguro_status');
