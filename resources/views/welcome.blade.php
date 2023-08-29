@@ -7,7 +7,7 @@
                 <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
                     @if ($product->photos->count())
                         <img src="{{ asset('storage/' . $product->photos->first()->image) }}" class="card-img-top"
-                            alt="{{ $product->name }}">
+                            alt="{{ $product->name }}" style="height: 350px; width: 350px;">
                     @else
                         <img src="{{ asset('assets/img/produtoSemFoto.jpg') }}" class="card-img-top" alt="...">
                     @endif
@@ -22,7 +22,24 @@
             </div>
         @endforeach
     </div>
-    <div class="center">
-        {{ $products->links() }}
-    </div>
-@endsection
+
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h2 ">Lojas em Destaques do Mês</h2>
+                <span>Neste mês, essas são as lojas com maior destaque!</span>
+            </div>
+             @foreach ($stores as $store)
+                <div class="col-4 ">
+                    @if ($store->logo)
+                        <img src="{{ asset('storage/' . $store->logo) }}" alt="Logo da Loja{{ $store->name }}"
+                            style=""class="img-fluid">
+                    @else
+                        <img src="https://via.placeholder.com/250x250.png?text=logo" alt="Logo sem logo"
+                            style=""class="img-fluid">
+                    @endif
+                    <h3>{{ $store->name }}</h3>
+                    <p>{{ $store->description }}</p>
+                </div>
+                @endforeach
+        </div>
+    @endsection

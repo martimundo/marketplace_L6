@@ -17,11 +17,12 @@ class CheckoutController extends Controller
             return redirect()->route('login');
         }
 
+        if(!session()->has('cart')){
+            
+            return redirect()->route('home');
+        }
+
         $this->makePagSeguroSession();
-
-        //var_dump(session()->get('pagseguro_session_code'));
-
-
 
         $cartItens = array_map(function ($line) {
             return $line['amount'] * $line['price'];
@@ -58,29 +59,33 @@ class CheckoutController extends Controller
             $userOrder->store()->sync();
 
             //Notificar loja de novo pedido
-		    $store = (new Store())->notifyStoreOwners($stores);
+            $store = (new Store())->notifyStoreOwners($stores);
 
-		    session()->forget('cart');
-		    session()->forget('pagseguro_session_code');
+            session()->forget('cart');
+            session()->forget('pagseguro_session_code');
 
-		    return response()->json([
-			    'data' => [
-				    'status' => true,
-				    'message' => 'Pedido criado com sucesso!',
-				    'order'   => $reference
-			    ]
-		    ]);
-
+            return response()->json([
+                'data' => [
+                    'status' => true,
+                    'message' => 'Pedido criado com sucesso!',
+                    'order'   => $reference
+                ]
+            ]);
         } catch (\Exception $e) {
-    		$message = env('APP_DEBUG') ? simplexml_load_string($e->getMessage()) : 'Erro ao processar pedido!';
+            $message = env('APP_DEBUG') ? simplexml_load_string($e->getMessage()) : 'Erro ao processar pedido!';
 
-		    return response()->json([
-			    'data' => [
-				    'status' => false,
-				    'message' => $message
-			    ]
-		    ], 401);
-	    }       
+            return response()->json([
+                'data' => [
+                    'status' => false,
+                    'message' => $message
+                ]
+            ], 401);
+        }
+    }
+
+    public function tanks()
+    {
+        return view('tanks');
     }
 
     private function makePagSeguroSession()
