@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Product;
 use App\Store;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class HomeController extends Controller
     public function index()
     {
         $products = $this->product->limit(6)->orderBy('id','desc')->get();
-        $stores = Store::limit(3)->orderBy('id','desc')->get();
+        $stores = Store::limit(3)->orderBy('id','desc')->get();  
+         
 
         return view('welcome', compact('products', 'stores'));
     }

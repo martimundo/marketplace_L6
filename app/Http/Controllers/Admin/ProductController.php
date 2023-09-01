@@ -46,6 +46,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all(['id', 'name']);
+        //dd($categories);
 
         return view('admin.products.create', compact('categories'));
     }
@@ -61,9 +62,11 @@ class ProductController extends Controller
 
         $data = $request->all(); //faz a req. de todos os dados 
 
-        $categories = $request->get('categorires', null);
+        $categories = $request->get('categories');
+        dd($categories);
 
         $store = auth()->user()->store; //pega a loja do usuário da logado
+
 
         $product = $store->products()->create($data); //cria um novo produto na loja do usuário
 
@@ -102,7 +105,7 @@ class ProductController extends Controller
     public function edit($id)
     {
 
-        $product = $this->product->find($id);
+        $product = $this->product->findOrFail($id);
 
         $categories = Category::all(['id', 'name']);
 
@@ -120,9 +123,13 @@ class ProductController extends Controller
     {
         $data = $request->all();
 
-        $categories = $request->get('ctegories', null);
+        dd($data);
+
+        $categories = $request->get('categories', null);
 
         $product = $this->product->find($id);
+
+        dd($product);
 
         $product->update($data);
 

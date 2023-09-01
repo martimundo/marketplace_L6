@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Category;
 use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +28,8 @@ class AppServiceProvider extends ServiceProvider
         \PagSeguro\Library::initialize();
         \PagSeguro\Library::cmsVersion()->setName("Marktplace")->setRelease("1.0.0");
         \PagSeguro\Library::moduleVersion()->setName("Marktplace")->setRelease("1.0.0");
+
+        
+
     }
 }

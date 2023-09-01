@@ -51,11 +51,11 @@
                 <label class="form-label">Slug</label>
                 <input type="text" name="slug" class="form-control form-control-sm"></input>
             </div>
-            <div class="col-4 form-group mt-2">
+            <div class="form-group">
                 <label>Categorias</label>
-                <select name="categories[]" class="form-select" multiple aria-label="multiple select example">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <select name="categories[]" id="" class="form-control" multiple>
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>

@@ -1,8 +1,31 @@
 @extends('layouts.front')
 
 @section('content')
+
     <div class="row">
-        @foreach ($products as $product)
+        <div class="col-4">
+            @if ($store->logo)
+                <img src="{{ asset('storage/' . $store->logo) }}" alt="Logo da Loja{{ $store->name }}"
+                    style=""class="img-fluid">
+            @else
+                <img src="https://via.placeholder.com/250x250.png?text=logo" alt="Logo sem logo"
+                    style=""class="img-fluid">
+            @endif
+        </div>
+        <div class="col-8"> 
+            <h2>{{ $store->name }}</h2>
+            <p>{{ $store->description }}</p>
+            <p>
+            <strong>Contatos</strong>
+            <span>{{ $store->phone }}</span> | <span>{{ $store->mobile_phone }}</span>
+            </p>
+            <hr>
+        </div>
+
+        <div class="col-12 mb-3">
+            <h3> Produto da Loja {{ $store->name }}</h3>
+        </div>
+        @forelse ($store->products as $product)
             <div class="col-3 m-1 ">
                 <div class="card shadow p-3 mb-5 bg-body rounded" style="width: 18rem;">
                     @if ($product->photos->count())
@@ -20,27 +43,11 @@
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
 
-    <div class="row">
-        <div class="col-12 text-center mb-5">
-            <h2 ">Lojas em Destaques do Mês</h2>
-                <span>Neste mês, essas são as lojas com maior destaque!</span>
+        @empty
+            <div class="col-12">
+                <h3 class="alert alert-warning">Não Há Produtos para essa Loja</h3>
             </div>
-             @foreach ($stores as $store)
-                <div class="col-4 ">
-                    @if ($store->logo)
-                        <img src="{{ asset('storage/' . $store->logo) }}" alt="Logo da Loja{{ $store->name }}"
-                            style=""class="img-fluid">
-                    @else
-                        <img src="https://via.placeholder.com/250x250.png?text=logo" alt="Logo sem logo"
-                            style=""class="img-fluid">
-                    @endif
-                    <h3>{{ $store->name }}</h3>
-                    <p>{{ $store->description }}</p>
-                    <a href="{{route('store.index',['slug'=>$store->slug])}}" class="btn btn-sm btn-success">Ver a Loja</a>
-                </div>
-                @endforeach
-        </div>
-    @endsection
+        @endforelse
+    </div>
+@endsection

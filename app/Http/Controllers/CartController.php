@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -16,24 +17,29 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $product = $request->get('product');
+        $productData = $request->get('product');
+
+        $product = Product::whereSlug($productData['slug']);
+
+        if (!$product->count() || $productData['amount'] == 0)
+            return redirect()->route('home');
+
+        $product = array_merge($productData, $product->first(['name', 'price'])->toArray());
 
         //verifica se existe carrinho na sessão
         if (session()->has('cart')) {
 
-            $products= session()->get('cart');
+            $products = session()->get('cart');
             $productsSlugs = array_column($products, 'slug');
 
-            if(in_array($product['slug'], $productsSlugs)){
+            if (in_array($product['slug'], $productsSlugs)) {
 
                 $products = $this->productIncrement($product['slug'], $product['amount'], $products);
 
-                session()->put('cart',$products);
-                
-            }else{
+                session()->put('cart', $products);
+            } else {
 
                 session()->push('cart', $product);
-
             }
         } else {
             //não existe carrinho na sessão valida
