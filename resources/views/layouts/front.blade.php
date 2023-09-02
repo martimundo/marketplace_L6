@@ -39,7 +39,8 @@
                 <ul class="navbar-nav mr-auto">
                     @auth
                         <li class="nav-item  ">
-                            <a href="" class="nav-link">Meus Pedidos</a>
+                            <a href="{{route('my.orders')}}" class="nav-link">Ver Pedidos(<spam>{{auth()->user()->name}}</spam>)</a>
+                            
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"

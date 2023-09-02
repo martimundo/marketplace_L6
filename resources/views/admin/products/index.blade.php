@@ -2,6 +2,7 @@
 @section('content')
     <a href="{{ route('admin.products.create') }}" class="btn btn-secondary mt-2"> <i class="fa-solid fa-plus"></i> Novo
         Produto</a>
+    <a href="{{ route('home') }}" class="btn btn-primary mt-2" target="blank">Acessar Loja</a>
 
     <table class="table table-hover">
         <thead>

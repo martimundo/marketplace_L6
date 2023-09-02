@@ -56,7 +56,7 @@ class CheckoutController extends Controller
 
             $userOrder = $user->orders()->create($userOrder);
 
-            $userOrder->store()->sync();
+            $userOrder->stores()->sync($stores);
 
             //Notificar loja de novo pedido
             $store = (new Store())->notifyStoreOwners($stores);

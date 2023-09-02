@@ -63,7 +63,7 @@ class ProductController extends Controller
         $data = $request->all(); //faz a req. de todos os dados 
 
         $categories = $request->get('categories');
-        dd($categories);
+        //dd($categories);
 
         $store = auth()->user()->store; //pega a loja do usuário da logado
 
@@ -123,13 +123,13 @@ class ProductController extends Controller
     {
         $data = $request->all();
 
-        dd($data);
+        //dd($data);
 
         $categories = $request->get('categories', null);
 
         $product = $this->product->find($id);
 
-        dd($product);
+        //dd($product);
 
         $product->update($data);
 

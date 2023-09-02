@@ -1,6 +1,7 @@
 @extends('layouts.front')
 
 @section('content')
+    
     <div class="row">
         @foreach ($products as $product)
             <div class="col-3 m-1 ">
@@ -26,9 +27,9 @@
     <div class="row">
         <div class="col-12 text-center mb-5">
             <h2 ">Lojas em Destaques do Mês</h2>
-                <span>Neste mês, essas são as lojas com maior destaque!</span>
-            </div>
-             @foreach ($stores as $store)
+                    <span>Neste mês, essas são as lojas com maior destaque!</span>
+                </div>
+                  @foreach ($stores as $store)
                 <div class="col-4 ">
                     @if ($store->logo)
                         <img src="{{ asset('storage/' . $store->logo) }}" alt="Logo da Loja{{ $store->name }}"
@@ -39,7 +40,8 @@
                     @endif
                     <h3>{{ $store->name }}</h3>
                     <p>{{ $store->description }}</p>
-                    <a href="{{route('store.index',['slug'=>$store->slug])}}" class="btn btn-sm btn-success">Ver a Loja</a>
+                    <a href="{{ route('store.index', ['slug' => $store->slug]) }}" class="btn btn-sm btn-success">Ver a
+                        Loja</a>
                 </div>
                 @endforeach
         </div>

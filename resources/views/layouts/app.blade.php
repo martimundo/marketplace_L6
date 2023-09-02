@@ -22,11 +22,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link @if(request()->is('/home')) active @endif" aria-current="page" href="#">Home</a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
-                        <a class="nav-link @if(request()->is('admin/store*')) active @endif" href="{{route('admin.stores.index')}}">Listar Lojas</a>
+                        <a class="nav-link @if(request()->is('admin/store*')) active @endif" href="{{route('admin.stores.index')}}">Minha Loja</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle @if(request()->is('admin/products*')) active @endif" href="#" id="navbarDropdown" role="button"
@@ -34,10 +35,10 @@
                             Cadastros
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{route('admin.products.create')}}">Produto</a></li>
+                            <li><a class="dropdown-item" href="{{route('admin.products.index')}}">Produto</a></li>
                            
-                            <li><a class="dropdown-item" href="{{route('admin.stores.create')}}">Lojas</a></li>   
-                            <li><a class="dropdown-item " href="{{route('admin.categories.create')}}">Categoria</a></li>   
+                            <li><a class="dropdown-item" href="{{route('admin.stores.index')}}">Lojas</a></li>   
+                            <li><a class="dropdown-item " href="{{route('admin.categories.index')}}">Categoria</a></li>   
                                                     
                             <li>
                                 <hr class="dropdown-divider">
@@ -57,7 +58,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Teste</a></li>
+                            <li><a class="dropdown-item" href="{{route('admin.orders.my')}}">Gerenciar Pedidos</a></li>
                         </ul>
                     </li>
 					
