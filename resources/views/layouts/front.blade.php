@@ -52,7 +52,9 @@
                             </form>
                         </li>
                     @endauth
-
+                    <li class="nav-item">
+                        <a href="{{route('register')}}" class="nav-link btn btn-success">Criar Minha Loja</a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('cart.index') }}" class="nav-link">
                             @if (session()->has('cart'))
