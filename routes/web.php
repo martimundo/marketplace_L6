@@ -15,7 +15,11 @@
 
 //######## FRONT END
 
+use App\Notifications\StoreReceiveNewOrder;
+use App\Store;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -69,6 +73,9 @@ Route::group(['middleware'=>'auth'], function(){
         Route::post('photos/remove','ProductPhotoController@removePhoto')->name('photo.remove');
 
         Route::get('orders/my', 'OrdersController@index')->name('orders.my');
+        Route::get('notifications', 'NotificationController@notifications')->name('notification.index');
+        Route::get('notifications/readAll', 'NotificationController@readAll')->name('notifications.redAll');
+        Route::get('notifications/read/{notification}', 'NotificationController@read')->name('notification.read');
         
     });
 });
@@ -77,4 +84,17 @@ Route::group(['middleware'=>'auth'], function(){
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('not', function(){
+
+    // $user = User::find(125);
+
+    // $user->notify(new \App\Notifications\StoreReceiveNewOrder());
+   //$notification = $user->notifications->first();
+    //$notification->markAsRead();
+    //return $user->readNotifications->count();
+
+    
+    
+});

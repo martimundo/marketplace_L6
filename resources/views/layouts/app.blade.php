@@ -59,10 +59,13 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="{{route('admin.orders.my')}}">Gerenciar Pedidos</a></li>
+                            <li><a class="dropdown-item" href="{{route('admin.notification.index')}}"><i class="fa-solid fa-bell"></i> 
+                                Mensagens <span class="badge bg-danger">{{auth()->user()->unreadnotifications->count()}}</span></a></li>
                         </ul>
                     </li>
 					
                 </ul>
+                
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
