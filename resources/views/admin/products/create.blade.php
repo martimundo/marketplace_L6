@@ -84,7 +84,7 @@
     <script src="https://cdn.jsdelivr.net/gh/plentz/jquery-maskmoney@master/dist/jquery.maskMoney.min.js"></script>
     <script>
         $('#price').maskMoney({
-            prefix:'R$ ',
+            prefix:'',
             allowNegative: false,
             thousands: '.',
             decimal:','
