@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-6 form-group mb-2">
                 <label class="form-label">Telefone<spam class="text-danger">*</spam></label>
-                <input type="text" name="fone" value="{{ old('fone') }}"
+                <input type="text" name="fone" id="phonefixed" value="{{ old('fone') }}"
                     class="form-control form-control-sm  @error('fone') is-invalid @enderror"></input>
                 @error('fone')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-6 form-group mb-2">
                 <label class="form-label">Cell Fone</label>
-                <input type="text" name="mobile_fone" value="{{ old('mobile_fone') }}"
+                <input type="text" name="mobile_fone" id="phone" value="{{ old('mobile_fone') }}"
                     class="form-control form-control-sm @error('mobile_fone') is-invalid @enderror"></input>
                 @error('mobile_fone')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -61,4 +61,15 @@
             <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    <script>
+        let phone = document.getElementById('phone')
+        let im = new Inputmask('(99)9-9999-9999');
+        im.mask(phone);
+        let phonefixed = document.getElementById('phonefixed')
+        let imf = new Inputmask('(99)9999-9999');
+        imf.mask(phone);
+    </script>
 @endsection

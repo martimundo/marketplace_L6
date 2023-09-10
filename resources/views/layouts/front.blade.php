@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Marketplace L6</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     @yield('stylesheets')
 </head>
@@ -29,8 +29,9 @@
                     <a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 @foreach ($categories as $category)
-                    <li class="nav-item " @if (request()->is('category'.$category->slug)) active @endif>
-                        <a class="nav-link" href="{{route('category.single',['slug'=>$category->slug])}}">{{$category->name}}</a>
+                    <li class="nav-item " @if (request()->is('category' . $category->slug)) active @endif>
+                        <a class="nav-link"
+                            href="{{ route('category.single', ['slug' => $category->slug]) }}">{{ $category->name }}</a>
                     </li>
                 @endforeach()
             </ul>
@@ -39,13 +40,13 @@
                 <ul class="navbar-nav mr-auto">
                     @auth
                         <li class="nav-item  ">
-                            <a href="{{route('my.orders')}}" class="nav-link">Ver Pedidos(<spam>{{auth()->user()->name}}</spam>)</a>
-                            
+                            <a href="{{ route('my.orders') }}" class="nav-link">Ver Pedidos(<spam>{{ auth()->user()->name }}
+                                </spam>)</a>
+
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"
-                                onclick="event.preventDefault();
-                                                                      document.querySelector('form.logout').submit(); ">Sair</a>
+                                onclick="event.preventDefault();document.querySelector('form.logout').submit(); ">Sair</a>
 
                             <form action="{{ route('logout') }}" class="logout" method="POST" style="display:none;">
                                 @csrf
@@ -53,7 +54,7 @@
                         </li>
                     @endauth
                     <li class="nav-item">
-                        <a href="{{route('register')}}" class="nav-link btn btn-success">Criar Minha Loja</a>
+                        <a href="{{ route('register') }}" class="nav-link btn btn-success">Criar Minha Loja</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('cart.index') }}" class="nav-link">
@@ -255,7 +256,7 @@
         <!-- Copyright -->
     </footer>
     <!-- Footer -->
-    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
 </body>
 

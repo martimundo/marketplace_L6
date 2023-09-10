@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-4 form-group mb-2">
                 <label class="form-label">Preço<spam class="text-danger">*</spam></label>
-                <input type="text" name="price"
+                <input type="text" name="price" id="price"
                     class="form-control form-control-sm @error('price') is-invalid @enderror"></input>
                 @error('price')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -73,9 +73,21 @@
             </div>
         </div>
 
-        <div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="{{ route('admin.products.index') }}" class="btn btn-info">Listagem de Produtos</a>
+        <div class="mb-5">
+            <button type="submit" class="btn btn-outline-success">Salvar</button>
+            <a href="{{ route('admin.products.index') }}" class="btn btn btn-outline-info"><i class="fa-solid fa-rotate-left"></i> Cancelar Cadastro</a>
+            <a href="{{ route('admin.products.index') }}" class="btn btn-outline-primary">Listagem de Produtos</a>
         </div>
     </form>
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/gh/plentz/jquery-maskmoney@master/dist/jquery.maskMoney.min.js"></script>
+    <script>
+        $('#price').maskMoney({
+            prefix:'R$ ',
+            allowNegative: false,
+            thousands: '.',
+            decimal:','
+        })
+    </script>
 @endsection

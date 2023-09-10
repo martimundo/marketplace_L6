@@ -30,8 +30,14 @@ class ProductController extends Controller
     public function index()
     {
         $userStore = auth()->user()->store;
+        $user = auth()->user();
 
-        $products = $userStore->products()->paginate(10);
+        if(!$user->store()->exists()){
+            flash("Cadastre a sua loja")->warning();
+            return redirect()->route('admin.stores.index');
+        }
+
+        $products = $user->store->products()->paginate(10);
 
         //$products->photos->first();
 
@@ -62,7 +68,10 @@ class ProductController extends Controller
 
         $data = $request->all(); //faz a req. de todos os dados 
 
-        $categories = $request->get('categories');
+        $categories = $request->get('categories', null);
+
+        $data['price'] = formatPriceDataBase($data['price']);
+        dd($data['price']);
         //dd($categories);
 
         $store = auth()->user()->store; //pega a loja do usuário da logado
@@ -123,6 +132,8 @@ class ProductController extends Controller
     {
         $data = $request->all();
 
+        $data['price'] = formatPriceDataBase($data['price']);
+        //dd($data['price']);
         //dd($data);
 
         $categories = $request->get('categories', null);

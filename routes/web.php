@@ -49,11 +49,10 @@ Route::prefix('checkout')->name('checkout.')->group(function(){
 
 
 
+Route::get('my-orders', 'UserOrderController@index')->name('my.orders')->middleware('auth');
+
 //########ROTAS ADMINISTRATIVA
-Route::group(['middleware'=>'auth'], function(){
-
-    Route::get('my-orders', 'UserOrderController@index')->name('my.orders');
-
+Route::group(['middleware'=>['auth','access.control.store.admin']], function(){
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
 
         // Route::prefix('stores')->name('stores.')->group(function(){

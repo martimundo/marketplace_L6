@@ -32,7 +32,7 @@
             </div>
             <div class="col-4 form-group mb-2">
                 <label class="form-label">Preço</label>
-                <input type="text" class="form-control form-control-sm" name="price"
+                <input type="text" class="form-control form-control-sm" name="price" id="price"
                     value="{{ $product->price }}"></input>
             </div>
             <div class="col-4 form-group mt-2">
@@ -58,8 +58,9 @@
             </div>
         </div>
         <div class="mb-4">
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-            <a href="{{ route('admin.products.index') }}" class="btn btn-info">Listagem de Produtos</a>
+            <button type="submit" class="btn btn-outline-success">Salvar</button>
+            <a href="{{ route('admin.products.index') }}" class="btn btn btn-outline-info"><i class="fa-solid fa-rotate-left"></i> Cancelar Atualização</a>
+            <a href="{{ route('admin.products.index') }}" class="btn btn-outline-primary">Listagem de Produtos</a>
         </div>
     </form>
     <div class="row">
@@ -75,4 +76,15 @@
             </div>
         @endforeach
     </div>
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/gh/plentz/jquery-maskmoney@master/dist/jquery.maskMoney.min.js"></script>
+    <script>
+        $('#price').maskMoney({
+            prefix:'R$ ',
+            allowNegative: false,
+            thousands: '.',
+            decimal:','
+        })
+    </script>
 @endsection
