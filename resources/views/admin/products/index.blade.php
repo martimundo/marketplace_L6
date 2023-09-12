@@ -11,6 +11,7 @@
                 <th scope="col">Nome</th>
                 <th scope="col">Preço</th>
                 <th scope="col">Loja</th>
+                <th scope="col">Slug</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
@@ -21,6 +22,7 @@
                     <td>{{ $product->name }}</td>
                     <td>R$ {{ number_format($product->price, 2, ',', '.') }}</td>
                     <td>{{$product->store->name}}</td>
+                    <td>{{$product->slug}}</td>
                     <td>
                         <div class="btn-group">
 

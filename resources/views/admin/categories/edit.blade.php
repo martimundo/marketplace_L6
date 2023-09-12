@@ -21,12 +21,12 @@
 				@enderror
 			</div>
 		</div>	
-	<div class="row">
+	<!--<div class="row">
 		<div class="col-4 form-group mb-2">
 			<label class="form-label">Slug</label>
 			<input type="text" class="form-control form-control-sm" name="slug" value="{{$category->slug}}"></input>
 		</div>		
-	</div>
+	</div>-->
 	<div>
 		<button type="submit" class="btn btn-success">Atualizar</button>
 		<a href="{{route('admin.categories.index')}}" class="btn btn-primary">Listar</a>

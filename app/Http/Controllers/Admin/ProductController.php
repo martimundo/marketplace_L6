@@ -32,7 +32,7 @@ class ProductController extends Controller
         $userStore = auth()->user()->store;
         $user = auth()->user();
 
-        if(!$user->store()->exists()){
+        if (!$user->store()->exists()) {
             flash("Cadastre a sua loja")->warning();
             return redirect()->route('admin.stores.index');
         }
@@ -67,11 +67,11 @@ class ProductController extends Controller
     {
 
         $data = $request->all(); //faz a req. de todos os dados 
-
+        
         $categories = $request->get('categories', null);
 
         $data['price'] = formatPriceDataBase($data['price']);
-        dd($data['price']);
+        //dd($data['price']);
         //dd($categories);
 
         $store = auth()->user()->store; //pega a loja do usuário da logado
@@ -82,7 +82,7 @@ class ProductController extends Controller
         $product->categories()->sync($categories); //faz o insert da categoria no produto
 
         if ($request->hasFile('photos')) {
-            
+
             $images = $this->imageUpload($request->file('photos'), 'image');
 
             //inserção das fotos na table

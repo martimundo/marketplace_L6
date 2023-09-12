@@ -14,6 +14,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ $store->name }}</h5>
                 <p class="card-text">{{ $store->description }}.</p>
+                <p class="card-text">{{ $store->slug }}.</p>
                 <hr class="divider">
                 <p class="card-text">Total de Produtos: {{ $store->products->count() }}.</p>
                 <hr class="divider">

@@ -10,6 +10,8 @@
                     <th scope="col">#</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Criado em: </th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -19,6 +21,8 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->description }}</td>
+                        <td>{{ $category->slug }}</td>
+                        <td>{{ $category->created_at }}</td>
                         <td>
                             <div class="btn-group">
 

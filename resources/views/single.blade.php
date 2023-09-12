@@ -9,19 +9,14 @@
                         <div class="col-md-6">
                             <div class="images p-3">
                                 @if ($product->photos->count())
-                                    <div class="text-center p-4"> <img id="main-image"
-                                            src="{{ asset('storage/' . $product->photos->first()->image) }}"
-                                            width="250" />
+                                    <div class="text-center p-4 "> <img id="main-image" src="{{ asset('storage/' . $product->thumb) }}"
+                                            width="250" class="thumbimg img-fluid img_principal" />
                                     </div>
                                 @else
-                                    <div class="text-center p-4"> <img id="main-image"
-                                            src="{{ asset('assets/img/produtoSemFoto.jpg') }}" width="250" /> </div>
+                                    <div class="text-center p-4"> <img id="main-image" src="{{ asset('assets/img/produtoSemFoto.jpg') }}" width="250" /> </div>
                                 @endif
                                 @foreach ($product->photos as $photo)
-                                    <div class="thumbnail text-center"> <img onclick="change_image(this)"
-                                            src="{{ asset('storage/' . $photo->image) }}" width="70"> <img
-                                            onclick="change_image(this)" src="{{ asset('storage/' . $photo->image) }}"
-                                            width="70"> </div>
+                                <div class="img-fluid" > <img src="{{ asset('storage/' . $photo->image) }}"class=" img-thumbnail thumbnail" width="100" height="100" > </div>
                                 @endforeach
                             </div>
                         </div>
@@ -82,4 +77,17 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        let thumbimg = document.querySelector('img.img_principal');
+        let thumbnail =document.querySelectorAll('img.img-thumbnail');
+
+        thumbnail.forEach(function(el){
+            el.addEventListener('click', function(){
+                thumbimg.src = el.src;               
+            });
+        });
+    </script>
 @endsection

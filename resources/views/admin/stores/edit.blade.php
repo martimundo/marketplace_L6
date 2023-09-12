@@ -41,13 +41,7 @@
                 @enderror
             </div>
         </div>
-        <div class="row">
-            <div class="col-4 form-group mb-2">
-                <label class="form-label">Slug</label>
-                <input type="text" class="form-control form-control-sm" name="slug"
-                    value="{{ $store->slug }}"></input>
-            </div>
-        </div>
+        
         <div class="row mt-2 mb-2">
             <div class="row">
                 <div class="col-4 m-4">

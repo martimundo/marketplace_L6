@@ -47,10 +47,12 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-4 form-group mb-2">
+            <!--
+                <div class="col-4 form-group mb-2">
                 <label class="form-label">Slug</label>
                 <input type="text" name="slug" class="form-control form-control-sm"></input>
-            </div>
+                </div>
+            -->
             <div class="form-group">
                 <label>Categorias</label>
                 <select name="categories[]" id="" class="form-control" multiple>

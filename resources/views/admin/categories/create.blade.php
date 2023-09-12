@@ -21,6 +21,7 @@
 				<div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            <!--
             <div class="col-3 form-group mb-2">
                 <label class="form-label">Slug</label>
                 <input type="description" name="slug" value="{{old('slug')}}"
@@ -29,6 +30,7 @@
 				<div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            -->
         </div>    
         
         <div>

@@ -29,7 +29,9 @@ cardNumber.addEventListener('keyup', function() {
 let submitButton = document.getElementById('#proccessCheckout');
 
 submitButton.addEventListener('click', function(event) {
+
     event.preventDefautl();
+
     PagSeguroDirectPayment.createCardToken({
         cardNumber: document.querySelector('input[name=card_number]').value,
         brand: document.querySelector('input[name=card_brand]').value,
@@ -39,6 +41,9 @@ submitButton.addEventListener('click', function(event) {
         success: function(res) {
             console.log(res)
             proccessPayment(res.card.token);
+        },
+        error: function(err) {
+            console.log(err);
         },
     });
 });
